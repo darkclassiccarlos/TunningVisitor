@@ -26,6 +26,13 @@ public class OrderManager extends JFrame {
 
   private OrderVisitor objVisitor;
 
+  private  Object[][] dataTable = {
+      /*    {"Jane", "White",
+                  "Speed reading", new Integer(20), new Boolean(true)},
+          {"Joe", "Brown",
+                  "Pool", new Integer(10), new Boolean(false)} */
+  };
+
   public OrderManager() {
     super("Visitor Pattern - Example");
 
@@ -63,6 +70,33 @@ public class OrderManager extends JFrame {
     JButton exitButton = new JButton(OrderManager.EXIT);
     exitButton.setMnemonic(KeyEvent.VK_X);
     ButtonHandler objButtonHandler = new ButtonHandler(this);
+
+    // *********** Grid in panel ***********
+
+    String[] columnNames = {"Type",
+            "Amount",
+            "Addit Tax",
+            "Addit S & H",
+            "Result"};
+
+    final JTable table = new JTable(dataTable, columnNames);
+    table.setPreferredScrollableViewportSize(new Dimension(30, 50));
+    //table.setFillsViewportHeight(true);
+
+    table.addMouseListener(new MouseAdapter() {
+      public void mouseClicked(MouseEvent e) {
+        JOptionPane.showMessageDialog(null, table.getSelectedRow());
+        objButtonHandler.printDebugData(table);
+      }
+    });
+
+    //Create the scroll pane and add the table to it.
+    JScrollPane scrollPane = new JScrollPane(table);
+
+    //Add the scroll pane to this panel.
+    add(scrollPane);
+
+    //**************************************
 
 
     getTotalButton.addActionListener(objButtonHandler);
@@ -166,7 +200,12 @@ public class OrderManager extends JFrame {
     Container contentPane = getContentPane();
 
     contentPane.add(buttonPanel, BorderLayout.NORTH);
-    contentPane.add(panel, BorderLayout.CENTER);
+
+    contentPane.add(scrollPane, BorderLayout.CENTER );
+
+    contentPane.add(panel, BorderLayout.PAGE_END);
+
+
     try {
       UIManager.setLookAndFeel(new WindowsLookAndFeel());
       SwingUtilities.updateComponentTreeUI(
@@ -277,6 +316,7 @@ class ButtonHandler implements ActionListener {
 
   public Order createOrder(String orderType,
       double orderAmount, double tax, double SH) {
+
     if (orderType.equalsIgnoreCase(OrderManager.CA_ORDER)) {
       return new CaliforniaOrder(orderAmount, tax);
     }
@@ -301,5 +341,22 @@ class ButtonHandler implements ActionListener {
     objOrderManager = inObjOrderManager;
   }
 
-} // End of class ButtonHandler
+  //*******************
+  public void printDebugData(JTable table) {
+    int numRows = table.getRowCount();
+    int numCols = table.getColumnCount();
+    javax.swing.table.TableModel model = table.getModel();
 
+    System.out.println("Value of data: ");
+    for (int i=0; i < numRows; i++) {
+      System.out.print("    row " + i + ":");
+      for (int j=0; j < numCols; j++) {
+        System.out.print("  " + model.getValueAt(i, j));
+      }
+      System.out.println();
+    }
+    System.out.println("--------------------------");
+  }
+  //*******************
+
+} // End of class ButtonHandler

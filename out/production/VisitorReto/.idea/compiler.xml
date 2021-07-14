@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JavacScttings">
+      <option name="ADDITONAL_OPTIONS_OVERRIDE">
+	<module name="VisitorCode" options="--add-exports java.desktop/com.sum.java.swing.plat.windows=ALL-UNNAMED" />
+    </option>
+  </component>
+</project>

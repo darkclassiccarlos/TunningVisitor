@@ -3,6 +3,7 @@ import java.io.*;
 import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
 import javax.swing.*;
 import com.sun.java.swing.plaf.windows.*;
 
@@ -307,10 +308,20 @@ class ButtonHandler implements ActionListener {
       //Get the Visitor
       OrderVisitor visitor =
         objOrderManager.getOrderVisitor();
-      totalResult = new Double(
-                      visitor.getOrderTotal()).toString();
+
+      //Se recorre el array de resultados
+      totalResult = new Double(visitor.getOrderTotal()).toString();
+
       totalResult = " Orders Total = " + totalResult;
       objOrderManager.setTotalValue(totalResult);
+
+      List<List<Object>> dataTables = visitor.getOrders();
+
+      for (int i = 0; i < dataTables.size(); i++) {
+        Object size = dataTables.get(i).get(4);
+        System.out.println(size.toString());
+      }
+
     }
   }
 

@@ -54,7 +54,9 @@ public class OrderManager extends JFrame {
     txtAdditionalSH = new JTextField(10);
 
     lblOrderType = new JLabel("Order Type:");
-
+    //
+    pSearchCriteria = new JPanel();
+    //
     //lblOrderAmount = new JLabel("Order Amount:");
     //lblAdditionalTax = new JLabel("Additional Tax(CA Orders Only):");
     //lblAdditionalSH =  new JLabel("Additional S & H(Overseas Orders Only):");
@@ -116,6 +118,7 @@ public class OrderManager extends JFrame {
     buttonPanel.add(txtAdditionalSH);
     buttonPanel.add(lblTotal);
     buttonPanel.add(lblTotalValue);
+    buttonPanel.add(pSearchCriteria);
 
     gbc.insets.top = 5;
     gbc.insets.bottom = 5;
@@ -135,7 +138,10 @@ public class OrderManager extends JFrame {
     gbc.gridx = 0;
     gbc.gridy = 1;
     //gridbag.setConstraints(lblOrderAmount, gbc);
-    gbc.anchor = GridBagConstraints.WEST;
+    //
+    gridbag.setConstraints(pSearchCriteria, gbc);
+    //
+    // gbc.anchor = GridBagConstraints.WEST;
     gbc.gridx = 1;
     gbc.gridy = 1;
     gridbag.setConstraints(txtOrderAmount, gbc);

@@ -44,6 +44,7 @@ public class OrderManager extends JFrame {
     txtAdditionalSH = new JTextField(10);
 
     lblOrderType = new JLabel("Order Type:");
+
     //lblOrderAmount = new JLabel("Order Amount:");
     //lblAdditionalTax = new JLabel("Additional Tax(CA Orders Only):");
     //lblAdditionalSH =  new JLabel("Additional S & H(Overseas Orders Only):");

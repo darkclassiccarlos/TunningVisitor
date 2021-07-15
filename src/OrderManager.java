@@ -333,10 +333,12 @@ class ButtonHandler implements ActionListener {
 
     if (e.getActionCommand().equals(OrderManager.GET_TOTAL)) {
       //Get the Visitor
-      OrderVisitor visitor =
-        objOrderManager.getOrderVisitor();
+      OrderVisitor visitor =  objOrderManager.getOrderVisitor();
+
       totalResult = new Double(visitor.getOrderTotal()).toString();
+
       totalResult = " Orders Total = " + totalResult;
+
       objOrderManager.setTotalValue(totalResult);
     }
   }

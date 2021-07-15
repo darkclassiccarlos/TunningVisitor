@@ -1,7 +1,6 @@
 import java.util.*;
 
 public class CompositeOrder implements Order {
-    private double orderAmount;
 
     private List<List<Object>> orders;
 
@@ -10,8 +9,6 @@ public class CompositeOrder implements Order {
     }
 
     public void addOrder(List<Object> or) {
-        //orders.add(Arrays.asList(type, amount, tax, sh, result));
-
         orders.add(or);
     }
 
@@ -24,8 +21,7 @@ public class CompositeOrder implements Order {
     }
 
     public double getOrderAmount() {
-
-        orderAmount = 0;
+        double orderAmount = 0;
 
         for(int x =0; x < orders.size(); x++)
         {
@@ -40,11 +36,9 @@ public class CompositeOrder implements Order {
         v.visit(this);
     }
 
-
     public void addUIControls() {
 
     }
-
 
     public void initialize() {
 

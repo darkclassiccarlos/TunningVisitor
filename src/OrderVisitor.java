@@ -41,7 +41,7 @@ class OrderVisitor implements VisitorInterface {
     //orderTotal = orderTotal + inp_order.getOrderAmount() + inp_order.getAdditionalSH();
     orderTotal = inp_order.getOrderAmount() + inp_order.getAdditionalSH();
 
-    or.addOrder(Arrays.asList("Overseas", inp_order.getOrderAmount(), 0.0, inp_order.getAdditionalSH(),  orderTotal));
+    or.addOrder(Arrays.asList("Colombian", inp_order.getOrderAmount(), 0.0, inp_order.getAdditionalSH(),  orderTotal));
   }
 
   public void visit(CompositeOrder inp_order) {

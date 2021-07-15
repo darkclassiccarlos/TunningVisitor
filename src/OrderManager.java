@@ -16,7 +16,6 @@ public class OrderManager extends JFrame {
   public static final String OVERSEAS_ORDER = "Overseas Order";
   public static final String COLOMBIAN_ORDER = "Colombian Order";
 
-
   private JComboBox cmbOrderType;
   private JTextField txtOrderAmount, txtAdditionalTax,
   txtAdditionalSH;
@@ -26,12 +25,7 @@ public class OrderManager extends JFrame {
 
   private OrderVisitor objVisitor;
 
-  private  Object[][] dataTable = {
-      /*    {"Jane", "White",
-                  "Speed reading", new Integer(20), new Boolean(true)},
-          {"Joe", "Brown",
-                  "Pool", new Integer(10), new Boolean(false)} */
-  };
+  private  Object[][] dataTable = {};
 
   public OrderManager() {
     super("Visitor Pattern - Example");

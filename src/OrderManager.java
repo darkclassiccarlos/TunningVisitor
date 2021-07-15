@@ -3,7 +3,11 @@ import java.io.*;
 import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 import com.sun.java.swing.plaf.windows.*;
 
 public class OrderManager extends JFrame {
@@ -28,7 +32,9 @@ public class OrderManager extends JFrame {
 
   private OrderVisitor objVisitor;
 
-  private  Object[][] dataTable = {};
+  private JTable table;
+  private JScrollPane scrollPane;
+  private Container contentPane;
 
   public OrderManager() {
     super("Visitor Pattern - Example");
@@ -66,34 +72,6 @@ public class OrderManager extends JFrame {
     JButton exitButton = new JButton(OrderManager.EXIT);
     exitButton.setMnemonic(KeyEvent.VK_X);
     ButtonHandler objButtonHandler = new ButtonHandler(this);
-
-    // *********** Grid in panel ***********
-
-    String[] columnNames = {"Type",
-            "Amount",
-            "Addit Tax",
-            "Addit S & H",
-            "Result"};
-
-    final JTable table = new JTable(dataTable, columnNames);
-    table.setPreferredScrollableViewportSize(new Dimension(30, 50));
-    //table.setFillsViewportHeight(true);
-
-    table.addMouseListener(new MouseAdapter() {
-      public void mouseClicked(MouseEvent e) {
-        JOptionPane.showMessageDialog(null, table.getSelectedRow());
-        objButtonHandler.printDebugData(table);
-      }
-    });
-
-    //Create the scroll pane and add the table to it.
-    JScrollPane scrollPane = new JScrollPane(table);
-
-    //Add the scroll pane to this panel.
-    add(scrollPane);
-
-    //**************************************
-
 
     getTotalButton.addActionListener(objButtonHandler);
     createOrderButton.addActionListener(objButtonHandler);
@@ -195,14 +173,13 @@ public class OrderManager extends JFrame {
     //****************************************************
 
     //Add the buttons and the log to the frame
-    Container contentPane = getContentPane();
+    contentPane = getContentPane();
 
     contentPane.add(buttonPanel, BorderLayout.NORTH);
 
-    contentPane.add(scrollPane, BorderLayout.CENTER );
+    //contentPane.add(scrollPane, BorderLayout.CENTER );
 
     contentPane.add(panel, BorderLayout.PAGE_END);
-
 
     try {
       UIManager.setLookAndFeel(new WindowsLookAndFeel());
@@ -253,8 +230,20 @@ public class OrderManager extends JFrame {
     return txtAdditionalSH.getText();
   }
   public JComboBox getOrderTypeCtrl() {
-
     return cmbOrderType;
+  }
+
+  public void setGrid(TableModel tableModel){
+    table = new JTable(tableModel);
+
+    table.addMouseListener(new MouseAdapter() {
+      public void mouseClicked(MouseEvent e) {
+        JOptionPane.showMessageDialog(null, table.getSelectedRow());
+      }
+    });
+
+    scrollPane = new JScrollPane(table);
+    contentPane.add(scrollPane, BorderLayout.CENTER);
   }
 
 } // End of class OrderManager
@@ -325,19 +314,48 @@ class ButtonHandler implements ActionListener {
       // accept the visitor instance
       order.accept(visitor);
 
-      objOrderManager.setTotalValue(
-        " Order Created Successfully");
+      objOrderManager.setTotalValue(" Order Created Successfully");
+
+      //Grid tables
+      SetValuesGrid(visitor.getOrders());
+
     }
 
     if (e.getActionCommand().equals(OrderManager.GET_TOTAL)) {
       //Get the Visitor
       OrderVisitor visitor =
         objOrderManager.getOrderVisitor();
-      totalResult = new Double(
-                      visitor.getOrderTotal()).toString();
+      totalResult = new Double(visitor.getOrderTotal()).toString();
       totalResult = " Orders Total = " + totalResult;
       objOrderManager.setTotalValue(totalResult);
     }
+  }
+
+  //Metodo que carga los datos en la grilla
+  public void SetValuesGrid(List<List<Object>> dataTables) {
+    List<String> columns = new ArrayList<String>();
+    List<String[]> values = new ArrayList<String[]>();
+
+    columns.add("Type");
+    columns.add("Amount");
+    columns.add("Addit Tax");
+    columns.add("Addit S&H");
+    columns.add("Result");
+
+    for (int i = 0; i < dataTables.size(); i++) {
+      values.add(
+              new String[] {
+                      dataTables.get(i).get(0).toString(),
+                      dataTables.get(i).get(1).toString(),
+                      dataTables.get(i).get(2).toString(),
+                      dataTables.get(i).get(3).toString(),
+                      dataTables.get(i).get(4).toString()
+              });
+    }
+
+    TableModel tableModel = new DefaultTableModel(values.toArray(new Object[][] {}), columns.toArray());
+
+    objOrderManager.setGrid(tableModel);
   }
 
   public Order createOrder(String orderType,

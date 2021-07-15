@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 
 public class OverseasOrder extends UIBuilder implements Order {
   private double orderAmount;
@@ -27,12 +28,51 @@ public class OverseasOrder extends UIBuilder implements Order {
 
 
   public void addUIControls() {
+    searchUI = new JPanel();
+
+    searchUI.add(txtAdditionalTax);
+
+    GridBagLayout gridbag = new GridBagLayout();
+    searchUI.setLayout(gridbag);
+    GridBagConstraints gbc = new GridBagConstraints();
+
+    searchUI.add(lblOrderAmount);
+    searchUI.add(txtOrderAmount);
+    searchUI.add(lblAdditionalSH);
+    searchUI.add(txtAdditionalTax);
+
+    gbc.insets.top = 5;
+    gbc.insets.bottom = 5;
+    gbc.insets.left = 5;
+    gbc.insets.right = 5;
+
+    gbc.anchor = GridBagConstraints.EAST;
+    gbc.gridx = 0;
+    gbc.gridy = 1;
+    gridbag.setConstraints(lblOrderAmount, gbc);
+
+    gbc.anchor = GridBagConstraints.WEST;
+    gbc.gridx = 1;
+    gbc.gridy = 1;
+    gridbag.setConstraints(txtOrderAmount, gbc);
+
+    gbc.anchor = GridBagConstraints.EAST;
+    gbc.gridx = 0;
+    gbc.gridy = 2;
+    gridbag.setConstraints(lblAdditionalSH, gbc);
+
+    gbc.anchor = GridBagConstraints.WEST;
+    gbc.gridx = 1;
+    gbc.gridy = 2;
+    gridbag.setConstraints(txtAdditionalTax, gbc);
+
 
   }
 
 
   public void initialize() {
-
+    lblOrderAmount.setText("Order Amount:");
+    lblAdditionalSH.setText("Additional S & H(Overseas and Colombian Orders Only):");
   }
 
   public String getOrderAmountText() {

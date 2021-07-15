@@ -68,6 +68,7 @@ public class CaliforniaOrder extends UIBuilder implements Order {
   }
 
   public void initialize() {
+    lblOrderAmount.setText("Order Amount:");
     lblAdditionalTax.setText("Additional Tax(CA Orders Only):");
   }
   public String getOrderAmountText() {

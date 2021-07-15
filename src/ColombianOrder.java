@@ -5,7 +5,7 @@ public class ColombianOrder extends UIBuilder implements Order {
   private double orderAmount;
   private double additionalSH;
   private JLabel lblOrderAmount = new JLabel("Order Amount:");
-  private JLabel lblAdditionalSH =  new JLabel("Additional S & H(Overseas Orders Only):");
+  private JLabel lblAdditionalSH =  new JLabel("Additional S & H(Overseas and Colombian Orders Only):");
   private JTextField txtOrderAmount = new JTextField(10);
   private JTextField txtAdditionalTax = new JTextField(10);
   public ColombianOrder() {
@@ -28,8 +28,7 @@ public class ColombianOrder extends UIBuilder implements Order {
 
 
   public void addUIControls() {
-    JTextField txtOrderAmount = new JTextField(10);
-    JTextField txtAdditionalTax = new JTextField(10);
+
     searchUI = new JPanel();
 
     searchUI.add(txtAdditionalTax);
@@ -73,7 +72,8 @@ public class ColombianOrder extends UIBuilder implements Order {
 
 
   public void initialize() {
-
+    lblOrderAmount.setText("Order Amount:");
+    lblAdditionalSH.setText("Additional S & H(Overseas and Colombian Orders Only):");
   }
 
   public String getOrderAmountText() {

@@ -23,11 +23,15 @@ public class CaliforniaOrder implements Order {
   }
 
   public void addUIControls() {
+    JPanel searchUI = new JPanel();
+    JTextField txtOrderAmount = new JTextField(10);
+    JTextField txtAdditionalTax = new JTextField(10);
 
   }
 
   public void initialize() {
-
+    lblOrderAmount.setText("Order Amount:");
+    lblAdditionalTax.setText("Additional Tax(CA Orders Only):");
   }
 }
 

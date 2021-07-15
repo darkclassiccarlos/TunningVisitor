@@ -1,12 +1,13 @@
 import java.util.*;
 import java.io.*;
-import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import com.sun.java.swing.plaf.windows.*;
+
 
 import com.sun.java.swing.plaf.windows.*;
 
@@ -374,7 +375,7 @@ class ButtonHandler implements ActionListener {
     }
     if (orderType.equalsIgnoreCase(
             OrderManager.COLOMBIAN_ORDER)) {
-      return new OverseasOrder(orderAmount, SH);
+      return new ColombianOrder(orderAmount, SH);
     }
     return null;
   }
@@ -418,7 +419,7 @@ class BuilderFactory {
       builder = new OverseasOrder();
     }
     if (str.equalsIgnoreCase(OrderManager.COLOMBIAN_ORDER)) {
-      builder = new OverseasOrder();
+      builder = new ColombianOrder();
     }
     return builder;
   }

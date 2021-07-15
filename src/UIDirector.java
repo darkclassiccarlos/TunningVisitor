@@ -6,5 +6,8 @@ public class UIDirector {
     public void build() {
         builder.addUIControls();
         builder.initialize();
+        builder.getOrderAmountText();
+        builder.getTaxtext();
+        builder.getSHtext();
     }
 }

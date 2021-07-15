@@ -1,4 +1,7 @@
+import com.sun.jndi.toolkit.dir.SearchFilter;
+
 import java.util.*;
+
 
 class OrderVisitor implements VisitorInterface {
   private Vector orderObjList;
@@ -28,8 +31,9 @@ class OrderVisitor implements VisitorInterface {
     orderTotal = inp_order.getOrderAmount();
   }
 
-
   public double getOrderTotal() {
     return orderTotal;
   }
+
+
 }

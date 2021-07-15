@@ -50,11 +50,9 @@ public class OrderManager extends JFrame {
     txtAdditionalSH = new JTextField(10);
 
     lblOrderType = new JLabel("Order Type:");
-    lblOrderAmount = new JLabel("Order Amount:");
-    lblAdditionalTax =
-      new JLabel("Additional Tax(CA Orders Only):");
-    lblAdditionalSH =
-      new JLabel("Additional S & H(Overseas Orders Only):");
+    //lblOrderAmount = new JLabel("Order Amount:");
+    //lblAdditionalTax = new JLabel("Additional Tax(CA Orders Only):");
+    //lblAdditionalSH =  new JLabel("Additional S & H(Overseas Orders Only):");
 
     lblTotal = new JLabel("Result:");
     lblTotalValue =
@@ -102,6 +100,8 @@ public class OrderManager extends JFrame {
     getTotalButton.addActionListener(objButtonHandler);
     createOrderButton.addActionListener(objButtonHandler);
     exitButton.addActionListener(new ButtonHandler());
+    //add listener
+    cmbOrderType.addActionListener(objButtonHandler);
 
     //For layout purposes, put the buttons in a separate panel
     JPanel buttonPanel = new JPanel();
@@ -131,11 +131,11 @@ public class OrderManager extends JFrame {
 
     buttonPanel.add(lblOrderType);
     buttonPanel.add(cmbOrderType);
-    buttonPanel.add(lblOrderAmount);
+    //buttonPanel.add(lblOrderAmount);
     buttonPanel.add(txtOrderAmount);
-    buttonPanel.add(lblAdditionalTax);
+    //buttonPanel.add(lblAdditionalTax);
     buttonPanel.add(txtAdditionalTax);
-    buttonPanel.add(lblAdditionalSH);
+    //buttonPanel.add(lblAdditionalSH);
     buttonPanel.add(txtAdditionalSH);
     buttonPanel.add(lblTotal);
     buttonPanel.add(lblTotalValue);
@@ -157,7 +157,7 @@ public class OrderManager extends JFrame {
     gbc.anchor = GridBagConstraints.EAST;
     gbc.gridx = 0;
     gbc.gridy = 1;
-    gridbag.setConstraints(lblOrderAmount, gbc);
+    //gridbag.setConstraints(lblOrderAmount, gbc);
     gbc.anchor = GridBagConstraints.WEST;
     gbc.gridx = 1;
     gbc.gridy = 1;
@@ -166,7 +166,7 @@ public class OrderManager extends JFrame {
     gbc.anchor = GridBagConstraints.EAST;
     gbc.gridx = 0;
     gbc.gridy = 2;
-    gridbag.setConstraints(lblAdditionalTax, gbc);
+    //gridbag.setConstraints(lblAdditionalTax, gbc);
     gbc.anchor = GridBagConstraints.WEST;
     gbc.gridx = 1;
     gbc.gridy = 2;
@@ -175,7 +175,7 @@ public class OrderManager extends JFrame {
     gbc.anchor = GridBagConstraints.EAST;
     gbc.gridx = 0;
     gbc.gridy = 3;
-    gridbag.setConstraints(lblAdditionalSH, gbc);
+    //gridbag.setConstraints(lblAdditionalSH, gbc);
     gbc.anchor = GridBagConstraints.WEST;
     gbc.gridx = 1;
     gbc.gridy = 3;
@@ -249,16 +249,39 @@ public class OrderManager extends JFrame {
   public String getSH() {
     return txtAdditionalSH.getText();
   }
+  public JComboBox getOrderTypeCtrl() {
+
+    return cmbOrderType;
+  }
 
 } // End of class OrderManager
 
 class ButtonHandler implements ActionListener {
   OrderManager objOrderManager;
+  Order builder;
   public void actionPerformed(ActionEvent e) {
     String totalResult = null;
 
     if (e.getActionCommand().equals(OrderManager.EXIT)) {
       System.exit(1);
+    }
+    if (e.getSource() == objOrderManager.getOrderTypeCtrl()) {
+      //String selection = objOrderManager.getOrderType();
+      String orderType = objOrderManager.getOrderType();
+
+      if (orderType.equals("") == false) {
+        BuilderFactory factory = new BuilderFactory();
+        //create an appropriate builder instance
+        builder = factory.getUIBuilder(orderType);
+        //configure the director with the builder
+        UIDirector director = new UIDirector(builder);
+        //director invokes different builder
+        // methods
+        //director.build();
+        //get the final build object
+        //JPanel UIObj = builder.getSearchUI();
+        //manager.displayNewUI(UIObj);
+      }
     }
     if (e.getActionCommand().equals(OrderManager.CREATE_ORDER)
         ) {
@@ -360,3 +383,22 @@ class ButtonHandler implements ActionListener {
   //*******************
 
 } // End of class ButtonHandler
+
+class BuilderFactory {
+  public Order getUIBuilder(String str) {
+    Order builder = null;
+    if (str.equalsIgnoreCase(OrderManager.CA_ORDER)) {
+     builder = new CaliforniaOrder();
+    }
+    if (str.equals(OrderManager.NON_CA_ORDER)) {
+      builder =  new NonCaliforniaOrder();
+    }
+    if (str.equalsIgnoreCase(OrderManager.OVERSEAS_ORDER)) {
+      builder = new OverseasOrder();
+    }
+    if (str.equalsIgnoreCase(OrderManager.COLOMBIAN_ORDER)) {
+      builder = new OverseasOrder();
+    }
+    return builder;
+  }
+}

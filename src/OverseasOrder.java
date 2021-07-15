@@ -1,7 +1,10 @@
+import javax.swing.*;
+
 public class OverseasOrder implements Order {
   private double orderAmount;
   private double additionalSH;
-
+  private JLabel lblOrderAmount = new JLabel("Order Amount:");
+  private JLabel lblAdditionalSH =  new JLabel("Additional S & H(Overseas Orders Only):");
   public OverseasOrder() {
   }
   public OverseasOrder(double inp_orderAmount,

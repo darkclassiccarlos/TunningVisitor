@@ -1,5 +1,8 @@
+import javax.swing.*;
+
 public class NonCaliforniaOrder implements Order {
   private double orderAmount;
+  private JLabel lblOrderAmount = new JLabel("Order Amount:");
 
   public NonCaliforniaOrder() {
   }

@@ -15,4 +15,14 @@ public class NonCaliforniaOrder implements Order {
   public void accept(OrderVisitor v) {
     v.visit(this);
   }
+
+
+  public void addUIControls() {
+
+  }
+
+
+  public void initialize() {
+
+  }
 }

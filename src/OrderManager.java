@@ -17,6 +17,9 @@ public class OrderManager extends JFrame {
   public static final String COLOMBIAN_ORDER = "Colombian Order";
 
   private JComboBox cmbOrderType;
+  //
+  private JPanel pSearchCriteria;
+  //
   private JTextField txtOrderAmount, txtAdditionalTax,
   txtAdditionalSH;
   private JLabel lblOrderType, lblOrderAmount;
@@ -210,7 +213,12 @@ public class OrderManager extends JFrame {
     }
 
   }
-
+  public void displayNewUI(JPanel panel) {
+    pSearchCriteria.removeAll();
+    pSearchCriteria.add(panel);
+    pSearchCriteria.validate();
+    validate();
+  }
   public static void main(String[] args) {
     JFrame frame = new OrderManager();
 
@@ -272,10 +280,10 @@ class ButtonHandler implements ActionListener {
         UIDirector director = new UIDirector(builder);
         //director invokes different builder
         // methods
-        //director.build();
+        director.build();
         //get the final build object
-        //JPanel UIObj = builder.getSearchUI();
-        //manager.displayNewUI(UIObj);
+        JPanel UIObj = builder.getSearchUI();
+        objOrderManager.displayNewUI(UIObj);
       }
     }
     if (e.getActionCommand().equals(OrderManager.CREATE_ORDER)

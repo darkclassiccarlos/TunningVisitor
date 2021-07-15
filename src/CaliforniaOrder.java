@@ -21,5 +21,13 @@ public class CaliforniaOrder implements Order {
   public void accept(OrderVisitor v) {
     v.visit(this);
   }
+
+  public void addUIControls() {
+
+  }
+
+  public void initialize() {
+
+  }
 }
 

@@ -51,7 +51,7 @@ class OrderVisitor implements VisitorInterface {
   }
 
   public double getOrderTotal() {
-    return orderTotal;
+    return or.getOrderAmount();
   }
 
   public List<List<Object>> getOrders() {

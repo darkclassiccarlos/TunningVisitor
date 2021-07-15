@@ -25,9 +25,12 @@ public class CompositeOrder implements Order {
 
     public double getOrderAmount() {
 
+        orderAmount = 0;
+
         for(int x =0; x < orders.size(); x++)
         {
-            Object size = orders.get(x).get(4);
+            double total = (double)orders.get(x).get(4);
+            orderAmount += total;
         }
 
         return orderAmount;

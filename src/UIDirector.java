@@ -1,6 +1,6 @@
 public class UIDirector {
-    private Order builder;
-    public UIDirector(Order bldr) {
+    private UIBuilder builder;
+    public UIDirector(UIBuilder bldr) {
         builder = bldr;
     }
     public void build() {

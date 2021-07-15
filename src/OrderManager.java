@@ -20,6 +20,7 @@ public class OrderManager extends JFrame {
   public static final String NON_CA_ORDER = "Non-California Order";
   public static final String OVERSEAS_ORDER = "Overseas Order";
   public static final String COLOMBIAN_ORDER = "Colombian Order";
+  public static final String BLANK = "";
 
   private JComboBox cmbOrderType;
   //
@@ -44,13 +45,15 @@ public class OrderManager extends JFrame {
     objVisitor = new OrderVisitor();
 
     cmbOrderType = new JComboBox();
+    cmbOrderType.addItem(OrderManager.BLANK);
     cmbOrderType.addItem(OrderManager.CA_ORDER);
     cmbOrderType.addItem(OrderManager.NON_CA_ORDER);
     cmbOrderType.addItem(OrderManager.OVERSEAS_ORDER);
     cmbOrderType.addItem(OrderManager.COLOMBIAN_ORDER);
 
-    txtOrderAmount = new JTextField(10);
-    txtAdditionalTax = new JTextField(10);
+
+    //txtOrderAmount = new JTextField(10);
+    //txtAdditionalTax = new JTextField(10);
     txtAdditionalSH = new JTextField(10);
 
     lblOrderType = new JLabel("Order Type:");
@@ -111,11 +114,11 @@ public class OrderManager extends JFrame {
     buttonPanel.add(lblOrderType);
     buttonPanel.add(cmbOrderType);
     //buttonPanel.add(lblOrderAmount);
-    buttonPanel.add(txtOrderAmount);
+    //buttonPanel.add(txtOrderAmount);
     //buttonPanel.add(lblAdditionalTax);
-    buttonPanel.add(txtAdditionalTax);
+    //buttonPanel.add(txtAdditionalTax);
     //buttonPanel.add(lblAdditionalSH);
-    buttonPanel.add(txtAdditionalSH);
+    //buttonPanel.add(txtAdditionalSH);
     buttonPanel.add(lblTotal);
     buttonPanel.add(lblTotalValue);
     buttonPanel.add(pSearchCriteria);
@@ -134,17 +137,17 @@ public class OrderManager extends JFrame {
     gbc.gridy = 0;
     gridbag.setConstraints(cmbOrderType, gbc);
 
-    gbc.anchor = GridBagConstraints.EAST;
-    gbc.gridx = 0;
-    gbc.gridy = 1;
+    //gbc.anchor = GridBagConstraints.EAST;
+    //gbc.gridx = 0;
+    //gbc.gridy = 1;
     //gridbag.setConstraints(lblOrderAmount, gbc);
     //
     gridbag.setConstraints(pSearchCriteria, gbc);
     //
-    // gbc.anchor = GridBagConstraints.WEST;
-    gbc.gridx = 1;
-    gbc.gridy = 1;
-    gridbag.setConstraints(txtOrderAmount, gbc);
+    //gbc.anchor = GridBagConstraints.WEST;
+    //gbc.gridx = 1;
+    //gbc.gridy = 1;
+    //gridbag.setConstraints(txtOrderAmount, gbc);
 
     gbc.anchor = GridBagConstraints.EAST;
     gbc.gridx = 0;
@@ -153,7 +156,7 @@ public class OrderManager extends JFrame {
     gbc.anchor = GridBagConstraints.WEST;
     gbc.gridx = 1;
     gbc.gridy = 2;
-    gridbag.setConstraints(txtAdditionalTax, gbc);
+    //gridbag.setConstraints(txtAdditionalTax, gbc);
 
     gbc.anchor = GridBagConstraints.EAST;
     gbc.gridx = 0;
@@ -257,7 +260,7 @@ public class OrderManager extends JFrame {
 
 class ButtonHandler implements ActionListener {
   OrderManager objOrderManager;
-  Order builder;
+  UIBuilder builder;
   public void actionPerformed(ActionEvent e) {
     String totalResult = null;
 
@@ -286,10 +289,10 @@ class ButtonHandler implements ActionListener {
         ) {
       //get input values
       String orderType = objOrderManager.getOrderType();
-      String strOrderAmount =
-        objOrderManager.getOrderAmount();
-      String strTax = objOrderManager.getTax();
-      String strSH = objOrderManager.getSH();
+      //String strOrderAmount = objOrderManager.getOrderAmountText();
+      String strOrderAmount = builder.getOrderAmountText();
+      String strTax = builder.getTaxtext();
+      String strSH = builder.getSHtext();
 
       double dblOrderAmount = 0.0;
       double dblTax = 0.0;
@@ -413,8 +416,8 @@ class ButtonHandler implements ActionListener {
 } // End of class ButtonHandler
 
 class BuilderFactory {
-  public Order getUIBuilder(String str) {
-    Order builder = null;
+  public UIBuilder getUIBuilder(String str) {
+    UIBuilder builder = null;
     if (str.equalsIgnoreCase(OrderManager.CA_ORDER)) {
      builder = new CaliforniaOrder();
     }

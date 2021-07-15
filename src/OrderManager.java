@@ -34,13 +34,6 @@ public class OrderManager extends JFrame {
 
   private OrderVisitor objVisitor;
 
-  private  Object[][] dataTable = {
-      /*    {"Jane", "White",
-                  "Speed reading", new Integer(20), new Boolean(true)},
-          {"Joe", "Brown",
-                  "Pool", new Integer(10), new Boolean(false)} */
-  };
-
   public OrderManager() {
     super("Visitor Pattern - Example");
 
@@ -78,30 +71,6 @@ public class OrderManager extends JFrame {
     JButton exitButton = new JButton(OrderManager.EXIT);
     exitButton.setMnemonic(KeyEvent.VK_X);
     ButtonHandler objButtonHandler = new ButtonHandler(this);
-
-    // *********** Grid in panel ***********
-
-    /*String[] columnNames = {"Type",
-            "Amount",
-            "Addit Tax",
-            "Addit S & H",
-            "Result"};
-
-    table = new JTable(dataTable, columnNames);
-    table.setPreferredScrollableViewportSize(new Dimension(30, 50));
-
-    table.addMouseListener(new MouseAdapter() {
-      public void mouseClicked(MouseEvent e) {
-        JOptionPane.showMessageDialog(null, table.getSelectedRow());
-        objButtonHandler.printDebugData(table);
-      }
-    });
-
-    scrollPane = new JScrollPane(table);
-    add(scrollPane);*/
-
-    //**************************************
-
 
     getTotalButton.addActionListener(objButtonHandler);
     createOrderButton.addActionListener(objButtonHandler);
@@ -304,8 +273,7 @@ class ButtonHandler implements ActionListener {
       dblSH = new Double(strSH).doubleValue();
 
       //Create the order
-      Order order = createOrder(orderType, dblOrderAmount,
-                    dblTax, dblSH);
+      Order order = createOrder(orderType, dblOrderAmount, dblTax, dblSH);
 
       //Get the Visitor
       OrderVisitor visitor = objOrderManager.getOrderVisitor();
@@ -314,6 +282,10 @@ class ButtonHandler implements ActionListener {
       order.accept(visitor);
 
       objOrderManager.setTotalValue(" Order Created Successfully");
+
+      //Grid tables
+      SetValuesGrid(visitor.getOrders());
+
     }
 
     if (e.getActionCommand().equals(OrderManager.GET_TOTAL)) {
@@ -327,33 +299,35 @@ class ButtonHandler implements ActionListener {
       totalResult = " Orders Total = " + totalResult;
       objOrderManager.setTotalValue(totalResult);
 
-      //Grid tables
-      List<List<Object>> dataTables = visitor.getOrders();
-      List<String> columns = new ArrayList<String>();
-      List<String[]> values = new ArrayList<String[]>();
-
-      columns.add("Type");
-      columns.add("Amount");
-      columns.add("Addit Tax");
-      columns.add("Addit S&H");
-      columns.add("Result");
-
-      for (int i = 0; i < dataTables.size(); i++) {
-        values.add(
-                new String[] {
-                        dataTables.get(i).get(0).toString(),
-                        dataTables.get(i).get(1).toString(),
-                        dataTables.get(i).get(2).toString(),
-                        dataTables.get(i).get(3).toString(),
-                        dataTables.get(i).get(4).toString()
-                });
-      }
-
-      TableModel tableModel = new DefaultTableModel(values.toArray(new Object[][] {}), columns.toArray());
-
-      objOrderManager.setGrid(tableModel);
-
     }
+
+  }
+
+  //Metodo que carga los datos en la grilla
+  public void SetValuesGrid(List<List<Object>> dataTables) {
+    List<String> columns = new ArrayList<String>();
+    List<String[]> values = new ArrayList<String[]>();
+
+    columns.add("Type");
+    columns.add("Amount");
+    columns.add("Addit Tax");
+    columns.add("Addit S&H");
+    columns.add("Result");
+
+    for (int i = 0; i < dataTables.size(); i++) {
+      values.add(
+              new String[] {
+                      dataTables.get(i).get(0).toString(),
+                      dataTables.get(i).get(1).toString(),
+                      dataTables.get(i).get(2).toString(),
+                      dataTables.get(i).get(3).toString(),
+                      dataTables.get(i).get(4).toString()
+              });
+    }
+
+    TableModel tableModel = new DefaultTableModel(values.toArray(new Object[][] {}), columns.toArray());
+
+    objOrderManager.setGrid(tableModel);
   }
 
   public Order createOrder(String orderType,

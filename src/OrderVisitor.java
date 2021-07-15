@@ -2,7 +2,6 @@ import com.sun.jndi.toolkit.dir.SearchFilter;
 
 import java.util.*;
 
-
 class OrderVisitor implements VisitorInterface {
   private Vector orderObjList;
   private double orderTotal;

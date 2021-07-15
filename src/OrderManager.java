@@ -16,7 +16,6 @@ public class OrderManager extends JFrame {
   public static final String OVERSEAS_ORDER = "Overseas Order";
   public static final String COLOMBIAN_ORDER = "Colombian Order";
 
-
   private JComboBox cmbOrderType;
   private JTextField txtOrderAmount, txtAdditionalTax,
   txtAdditionalSH;

@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CaliforniaOrder extends UIBuilder implements Order {
+
   private double orderAmount;
   private double additionalTax;
   private JLabel lblOrderAmount = new JLabel("Order Amount:");
@@ -27,10 +28,7 @@ public class CaliforniaOrder extends UIBuilder implements Order {
 
   public void addUIControls() {
 
-    searchUI = new JPanel();
-
-    searchUI.add(txtAdditionalTax);
-
+    searchUI = new JPanel(new FlowLayout());
     GridBagLayout gridbag = new GridBagLayout();
     searchUI.setLayout(gridbag);
     GridBagConstraints gbc = new GridBagConstraints();

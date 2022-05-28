@@ -21,9 +21,9 @@ public class OrderManager extends JFrame {
   private JComboBox cmbOrderType;
   //
   private JPanel pSearchCriteria;
+  private JPanel pOrder;
   //
-  private JTextField txtOrderAmount, txtAdditionalTax,
-  txtAdditionalSH;
+  private JTextField txtOrderAmount, txtAdditionalTax, txtAdditionalSH;
   private JLabel lblOrderType, lblOrderAmount;
   private JLabel lblAdditionalTax, lblAdditionalSH;
   private JLabel lblTotal, lblTotalValue;
@@ -47,29 +47,20 @@ public class OrderManager extends JFrame {
     cmbOrderType.addItem(OrderManager.OVERSEAS_ORDER);
     cmbOrderType.addItem(OrderManager.CHINISE_ORDER);
 
-
-    //txtOrderAmount = new JTextField(10);
-    //txtAdditionalTax = new JTextField(10);
     txtAdditionalSH = new JTextField(10);
 
     lblOrderType = new JLabel("Order Type:");
-    //
-    pSearchCriteria = new JPanel();
-    //
-    //lblOrderAmount = new JLabel("Order Amount:");
-    //lblAdditionalTax = new JLabel("Additional Tax(CA Orders Only):");
-    //lblAdditionalSH =  new JLabel("Additional S & H(Overseas Orders Only):");
+
+    pSearchCriteria = new JPanel(new FlowLayout());
+    pOrder = new JPanel(new FlowLayout());
 
     lblTotal = new JLabel("Result:");
-    lblTotalValue =
-      new JLabel("Click Create or GetTotal Button");
+    lblTotalValue = new JLabel("Click Create or GetTotal Button");
 
     //Create the open button
-    JButton getTotalButton =
-      new JButton(OrderManager.GET_TOTAL);
+    JButton getTotalButton = new JButton(OrderManager.GET_TOTAL);
     getTotalButton.setMnemonic(KeyEvent.VK_G);
-    JButton createOrderButton =
-      new JButton(OrderManager.CREATE_ORDER);
+    JButton createOrderButton = new JButton(OrderManager.CREATE_ORDER);
     getTotalButton.setMnemonic(KeyEvent.VK_C);
     JButton exitButton = new JButton(OrderManager.EXIT);
     exitButton.setMnemonic(KeyEvent.VK_X);
@@ -82,9 +73,10 @@ public class OrderManager extends JFrame {
     cmbOrderType.addActionListener(objButtonHandler);
 
     //For layout purposes, put the buttons in a separate panel
-    JPanel buttonPanel = new JPanel();
+    JPanel buttonPanel = new JPanel(new FlowLayout());
+    JPanel orderPanel = new JPanel(new FlowLayout());
+    JPanel panel = new JPanel(new FlowLayout());
 
-    JPanel panel = new JPanel();
     GridBagLayout gridbag2 = new GridBagLayout();
     panel.setLayout(gridbag2);
     GridBagConstraints gbc2 = new GridBagConstraints();
@@ -105,19 +97,20 @@ public class OrderManager extends JFrame {
     //****************************************************
     GridBagLayout gridbag = new GridBagLayout();
     buttonPanel.setLayout(gridbag);
+
+    GridBagLayout gridbagOrder = new GridBagLayout();
+    orderPanel.setLayout(gridbagOrder);
+
     GridBagConstraints gbc = new GridBagConstraints();
+    gbc.anchor = GridBagConstraints.NORTH;
 
     buttonPanel.add(lblOrderType);
     buttonPanel.add(cmbOrderType);
-    //buttonPanel.add(lblOrderAmount);
-    //buttonPanel.add(txtOrderAmount);
-    //buttonPanel.add(lblAdditionalTax);
-    //buttonPanel.add(txtAdditionalTax);
-    //buttonPanel.add(lblAdditionalSH);
-    //buttonPanel.add(txtAdditionalSH);
+
     buttonPanel.add(lblTotal);
     buttonPanel.add(lblTotalValue);
-    buttonPanel.add(pSearchCriteria);
+
+    orderPanel.add(pOrder);
 
     gbc.insets.top = 5;
     gbc.insets.bottom = 5;
@@ -133,31 +126,20 @@ public class OrderManager extends JFrame {
     gbc.gridy = 0;
     gridbag.setConstraints(cmbOrderType, gbc);
 
-    //gbc.anchor = GridBagConstraints.EAST;
-    //gbc.gridx = 0;
-    //gbc.gridy = 1;
-    //gridbag.setConstraints(lblOrderAmount, gbc);
-    //
     gridbag.setConstraints(pSearchCriteria, gbc);
-    //
-    //gbc.anchor = GridBagConstraints.WEST;
-    //gbc.gridx = 1;
-    //gbc.gridy = 1;
-    //gridbag.setConstraints(txtOrderAmount, gbc);
 
     gbc.anchor = GridBagConstraints.EAST;
     gbc.gridx = 0;
     gbc.gridy = 2;
-    //gridbag.setConstraints(lblAdditionalTax, gbc);
+
     gbc.anchor = GridBagConstraints.WEST;
     gbc.gridx = 1;
     gbc.gridy = 2;
-    //gridbag.setConstraints(txtAdditionalTax, gbc);
 
     gbc.anchor = GridBagConstraints.EAST;
     gbc.gridx = 0;
     gbc.gridy = 3;
-    //gridbag.setConstraints(lblAdditionalSH, gbc);
+
     gbc.anchor = GridBagConstraints.WEST;
     gbc.gridx = 1;
     gbc.gridy = 3;
@@ -183,7 +165,7 @@ public class OrderManager extends JFrame {
 
     contentPane.add(buttonPanel, BorderLayout.NORTH);
 
-    //contentPane.add(scrollPane, BorderLayout.CENTER );
+    contentPane.add(orderPanel, BorderLayout.CENTER);
 
     contentPane.add(panel, BorderLayout.PAGE_END);
 
@@ -197,9 +179,9 @@ public class OrderManager extends JFrame {
 
   }
   public void displayNewUI(JPanel panel) {
-    pSearchCriteria.removeAll();
-    pSearchCriteria.add(panel);
-    pSearchCriteria.validate();
+    pOrder.removeAll();
+    pOrder.add(panel);
+    pOrder.validate();
     validate();
   }
   public static void main(String[] args) {
@@ -213,7 +195,7 @@ public class OrderManager extends JFrame {
                            );
 
     //frame.pack();
-    frame.setSize(500, 400);
+    frame.setSize(1000, 600);
     frame.setVisible(true);
   }
 
@@ -249,7 +231,7 @@ public class OrderManager extends JFrame {
     });
 
     scrollPane = new JScrollPane(table);
-    contentPane.add(scrollPane, BorderLayout.CENTER);
+    contentPane.add(scrollPane, BorderLayout.LINE_END);
   }
 
 } // End of class OrderManager
@@ -278,6 +260,7 @@ class ButtonHandler implements ActionListener {
         director.build();
         //get the final build object
         JPanel UIObj = builder.getSearchUI();
+
         objOrderManager.displayNewUI(UIObj);
       }
     }

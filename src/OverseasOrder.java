@@ -72,7 +72,7 @@ public class OverseasOrder extends UIBuilder implements Order {
 
   public void initialize() {
     lblOrderAmount.setText("Order Amount:");
-    lblAdditionalSH.setText("Additional S & H(Overseas and Colombian Orders Only):");
+    lblAdditionalSH.setText("Additional S & H(Overseas and Chinise Orders Only):");
   }
 
   public String getOrderAmountText() {

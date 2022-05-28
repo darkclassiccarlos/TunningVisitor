@@ -1,17 +1,17 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class ColombianOrder extends UIBuilder implements Order {
+public class ChiniseOrder extends UIBuilder implements Order {
   private double orderAmount;
   private double additionalSH;
   private JLabel lblOrderAmount = new JLabel("Order Amount:");
   private JLabel lblAdditionalSH =  new JLabel("Additional S & H(Overseas and Colombian Orders Only):");
   private JTextField txtOrderAmount = new JTextField(10);
   private JTextField txtAdditionalTax = new JTextField(10);
-  public ColombianOrder() {
+  public ChiniseOrder() {
   }
-  public ColombianOrder(double inp_orderAmount,
-      double inp_additionalSH) {
+  public ChiniseOrder(double inp_orderAmount,
+                      double inp_additionalSH) {
     orderAmount = inp_orderAmount;
     additionalSH = inp_additionalSH;
 

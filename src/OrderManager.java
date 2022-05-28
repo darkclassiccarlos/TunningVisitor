@@ -1,14 +1,10 @@
 import java.util.*;
-import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import com.sun.java.swing.plaf.windows.*;
-
-
 import com.sun.java.swing.plaf.windows.*;
 
 public class OrderManager extends JFrame {
@@ -19,7 +15,7 @@ public class OrderManager extends JFrame {
   public static final String CA_ORDER = "California Order";
   public static final String NON_CA_ORDER = "Non-California Order";
   public static final String OVERSEAS_ORDER = "Overseas Order";
-  public static final String COLOMBIAN_ORDER = "Colombian Order";
+  public static final String CHINISE_ORDER = "Chinise Order";
   public static final String BLANK = "";
 
   private JComboBox cmbOrderType;
@@ -49,7 +45,7 @@ public class OrderManager extends JFrame {
     cmbOrderType.addItem(OrderManager.CA_ORDER);
     cmbOrderType.addItem(OrderManager.NON_CA_ORDER);
     cmbOrderType.addItem(OrderManager.OVERSEAS_ORDER);
-    cmbOrderType.addItem(OrderManager.COLOMBIAN_ORDER);
+    cmbOrderType.addItem(OrderManager.CHINISE_ORDER);
 
 
     //txtOrderAmount = new JTextField(10);
@@ -385,8 +381,8 @@ class ButtonHandler implements ActionListener {
       return new OverseasOrder(orderAmount, SH);
     }
     if (orderType.equalsIgnoreCase(
-            OrderManager.COLOMBIAN_ORDER)) {
-      return new ColombianOrder(orderAmount, SH);
+            OrderManager.CHINISE_ORDER)) {
+      return new ChiniseOrder(orderAmount, SH);
     }
     return null;
   }

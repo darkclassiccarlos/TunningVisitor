@@ -10,8 +10,8 @@ public class BuilderFactory {
         if (str.equalsIgnoreCase(OrderManager.OVERSEAS_ORDER)) {
             builder = new OverseasOrder();
         }
-        if (str.equalsIgnoreCase(OrderManager.COLOMBIAN_ORDER)) {
-            builder = new ColombianOrder();
+        if (str.equalsIgnoreCase(OrderManager.CHINISE_ORDER)) {
+            builder = new ChiniseOrder();
         }
         return builder;
     }

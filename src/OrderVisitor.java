@@ -1,5 +1,3 @@
-import com.sun.jndi.toolkit.dir.SearchFilter;
-
 import java.util.*;
 
 class OrderVisitor implements VisitorInterface {
@@ -26,9 +24,9 @@ class OrderVisitor implements VisitorInterface {
     or.addOrder(Arrays.asList("Overseas", inp_order.getOrderAmount(), 0.0, inp_order.getAdditionalSH(), orderTotal));
   }
 
-  public void visit(ColombianOrder inp_order) {
+  public void visit(ChiniseOrder inp_order) {
     orderTotal = inp_order.getOrderAmount() + inp_order.getAdditionalSH();
-    or.addOrder(Arrays.asList("Colombian", inp_order.getOrderAmount(), 0.0, inp_order.getAdditionalSH(),  orderTotal));
+    or.addOrder(Arrays.asList("Chinise", inp_order.getOrderAmount(), 0.0, inp_order.getAdditionalSH(),  orderTotal));
   }
 
   public void visit(CompositeOrder inp_order) {

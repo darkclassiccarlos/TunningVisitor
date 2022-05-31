@@ -30,7 +30,8 @@ public class OrderManager extends JFrame {
 
   private OrderVisitor objVisitor;
 
-  private JTable table;
+  private DefaultTableModel tableModel = new DefaultTableModel();
+  private JTable table = new JTable(tableModel);
   private JScrollPane scrollPane;
   private Container contentPane;
 
@@ -158,6 +159,11 @@ public class OrderManager extends JFrame {
     gbc.insets.right = 2;
     gbc.insets.top = 40;
 
+    table.addMouseListener(new MouseAdapter() {
+      public void mouseClicked(MouseEvent e) {
+        JOptionPane.showMessageDialog(null, table.getSelectedRow());
+      }
+    });
     //****************************************************
 
     //Add the buttons and the log to the frame
@@ -168,6 +174,9 @@ public class OrderManager extends JFrame {
     contentPane.add(orderPanel, BorderLayout.CENTER);
 
     contentPane.add(panel, BorderLayout.PAGE_END);
+
+    scrollPane = new JScrollPane(table);
+    contentPane.add(scrollPane, BorderLayout.LINE_END);
 
     try {
       UIManager.setLookAndFeel(new WindowsLookAndFeel());
@@ -222,16 +231,19 @@ public class OrderManager extends JFrame {
   }
 
   public void setGrid(TableModel tableModel){
-    table = new JTable(tableModel);
 
-    table.addMouseListener(new MouseAdapter() {
-      public void mouseClicked(MouseEvent e) {
-        JOptionPane.showMessageDialog(null, table.getSelectedRow());
-      }
-    });
+    //int tabLarge = tableModel.getRowCount();
+    //if (tabLarge > 0){
+    //  table = new JTable(tableModel);
+    //}else{
+    //  table.setModel(tableModel);
+    //}
 
-    scrollPane = new JScrollPane(table);
-    contentPane.add(scrollPane, BorderLayout.LINE_END);
+    table.setModel(tableModel);
+
+
+
+
   }
 
 } // End of class OrderManager
@@ -307,19 +319,25 @@ class ButtonHandler implements ActionListener {
 
       //Grid tables
       SetValuesGrid(visitor.getOrders());
+      GetTotalMethod();
 
     }
 
     if (e.getActionCommand().equals(OrderManager.GET_TOTAL)) {
-      //Get the Visitor
-      OrderVisitor visitor =  objOrderManager.getOrderVisitor();
-
-      totalResult = new Double(visitor.getOrderTotal()).toString();
-
-      totalResult = " Orders Total = " + totalResult;
-
-      objOrderManager.setTotalValue(totalResult);
+      GetTotalMethod();
     }
+  }
+
+  private void GetTotalMethod() {
+    String totalResult;
+    //Get the Visitor
+    OrderVisitor visitor =  objOrderManager.getOrderVisitor();
+
+    totalResult = new Double(visitor.getOrderTotal()).toString();
+
+    totalResult = " Orders Total = " + totalResult;
+
+    objOrderManager.setTotalValue(totalResult);
   }
 
   //Metodo que carga los datos en la grilla

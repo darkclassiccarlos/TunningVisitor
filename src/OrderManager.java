@@ -161,7 +161,18 @@ public class OrderManager extends JFrame {
 
     table.addMouseListener(new MouseAdapter() {
       public void mouseClicked(MouseEvent e) {
-        JOptionPane.showMessageDialog(null, table.getSelectedRow());
+        String selectedData = null;
+        int row = table.getSelectedRow();
+
+        String typeData = table.getModel().getValueAt(row, 0).toString();
+        String amountData = table.getModel().getValueAt(row, 1).toString();
+        String addTaxData = table.getModel().getValueAt(row, 2).toString();
+        String addSHData = table.getModel().getValueAt(row, 3).toString();
+        String resData = table.getModel().getValueAt(row, 4).toString();
+
+        selectedData = typeData + ";" + amountData + ";" + addTaxData + ";" + addSHData + ";" + resData;
+
+        JOptionPane.showMessageDialog(null, selectedData);
       }
     });
     //****************************************************

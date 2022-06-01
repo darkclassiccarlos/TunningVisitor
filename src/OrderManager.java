@@ -11,6 +11,8 @@ public class OrderManager extends JFrame {
   public static final String newline = "\n";
   public static final String GET_TOTAL = "Get Total";
   public static final String CREATE_ORDER = "Create Order";
+  public static final String DELETE_ORDER = "Delete Order";
+  public static final String UPDATE_ORDER = "Update Order";
   public static final String EXIT = "Exit";
   public static final String CA_ORDER = "California Order";
   public static final String NON_CA_ORDER = "Non-California Order";
@@ -34,12 +36,15 @@ public class OrderManager extends JFrame {
   private JTable table = new JTable(tableModel);
   private JScrollPane scrollPane;
   private Container contentPane;
+  private int row;
 
   public OrderManager() {
     super("Visitor Pattern - Example");
 
     //Create the visitor instance
     objVisitor = new OrderVisitor();
+
+
 
     cmbOrderType = new JComboBox();
     cmbOrderType.addItem(OrderManager.BLANK);
@@ -62,13 +67,25 @@ public class OrderManager extends JFrame {
     JButton getTotalButton = new JButton(OrderManager.GET_TOTAL);
     getTotalButton.setMnemonic(KeyEvent.VK_G);
     JButton createOrderButton = new JButton(OrderManager.CREATE_ORDER);
-    getTotalButton.setMnemonic(KeyEvent.VK_C);
+    createOrderButton.setMnemonic(KeyEvent.VK_C);
+    //Boton Delete
+    JButton deleteOrderButton = new JButton(OrderManager.DELETE_ORDER);
+    deleteOrderButton.setMnemonic(KeyEvent.VK_D);
+    //Boton update
+    JButton updateOrderButton = new JButton(OrderManager.UPDATE_ORDER);
+    updateOrderButton.setMnemonic(KeyEvent.VK_U);
+    //
     JButton exitButton = new JButton(OrderManager.EXIT);
     exitButton.setMnemonic(KeyEvent.VK_X);
     ButtonHandler objButtonHandler = new ButtonHandler(this);
 
     getTotalButton.addActionListener(objButtonHandler);
     createOrderButton.addActionListener(objButtonHandler);
+    //
+    deleteOrderButton.addActionListener(objButtonHandler);
+    //
+    updateOrderButton.addActionListener(objButtonHandler);
+    //
     exitButton.addActionListener(new ButtonHandler());
     //add listener
     cmbOrderType.addActionListener(objButtonHandler);
@@ -82,7 +99,9 @@ public class OrderManager extends JFrame {
     panel.setLayout(gridbag2);
     GridBagConstraints gbc2 = new GridBagConstraints();
     panel.add(getTotalButton);
+    panel.add(deleteOrderButton);
     panel.add(createOrderButton);
+    panel.add(updateOrderButton);
     panel.add(exitButton);
     gbc2.anchor = GridBagConstraints.EAST;
     gbc2.gridx = 0;
@@ -91,7 +110,16 @@ public class OrderManager extends JFrame {
     gbc2.gridx = 1;
     gbc2.gridy = 0;
     gridbag2.setConstraints(getTotalButton, gbc2);
+    //
     gbc2.gridx = 2;
+    gbc2.gridy = 0;
+    gridbag2.setConstraints(deleteOrderButton, gbc2);
+    //
+    gbc2.gridx = 3;
+    gbc2.gridy = 0;
+    gridbag2.setConstraints(updateOrderButton, gbc2);
+    //
+    gbc2.gridx = 4;
     gbc2.gridy = 0;
     gridbag2.setConstraints(exitButton, gbc2);
 
@@ -158,7 +186,8 @@ public class OrderManager extends JFrame {
     gbc.insets.left = 2;
     gbc.insets.right = 2;
     gbc.insets.top = 40;
-
+//****************************************************
+// funcion que trae las ordenes
     table.addMouseListener(new MouseAdapter() {
       public void mouseClicked(MouseEvent e) {
         String selectedData = null;
@@ -224,6 +253,10 @@ public class OrderManager extends JFrame {
   }
   public OrderVisitor getOrderVisitor() {
     return objVisitor;
+  }
+  public int getSelectedRow() {
+    row = table.getSelectedRow();
+    return row;
   }
   public String getOrderType() {
     return (String) cmbOrderType.getSelectedItem();
@@ -337,6 +370,37 @@ class ButtonHandler implements ActionListener {
     if (e.getActionCommand().equals(OrderManager.GET_TOTAL)) {
       GetTotalMethod();
     }
+    //****
+    if (e.getActionCommand().equals(OrderManager.DELETE_ORDER)) {
+      //Get the Visitor
+      //OrderVisitor visitor = objOrderManager.getOrderVisitor();
+      //get the orders
+      List<List<Object>> orders = getOrders();
+      int position = getSelectedRow();
+
+      // El index
+      int index = position;
+
+      orders.remove(index);
+      // accept the visitor instance
+      //order.accept(visitor);
+
+      //int position = SetValuesGrid(visitor.getOrders()) ;
+    }
+    //****
+
+  }
+  private int getSelectedRow(){
+    OrderVisitor visitor =  objOrderManager.getOrderVisitor();
+    int row = objOrderManager.getSelectedRow();
+    return row;
+  }
+  private List<List<Object>> getOrders(){
+    List<List<Object>> orders;
+    OrderVisitor visitor =  objOrderManager.getOrderVisitor();
+    orders = new ArrayList(visitor.getOrders());
+    //get input values from table
+    return orders;
   }
 
   private void GetTotalMethod() {

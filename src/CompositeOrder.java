@@ -16,6 +16,10 @@ public class CompositeOrder implements Order {
         return orders.get(position);
     }
 
+    public List<List<Object>> deleteOrder(int position) {
+        orders.remove(position);
+        return orders;
+    }
     public List<List<Object>> getOrders() {
         return orders;
     }

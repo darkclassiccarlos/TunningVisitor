@@ -46,5 +46,9 @@ class OrderVisitor implements VisitorInterface {
     return or.getOrders();
   }
 
+  public List<List<Object>> deleteOrder(int position) {
+    return or.deleteOrder(position);
+  }
+
 }
 

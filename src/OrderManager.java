@@ -374,11 +374,10 @@ class ButtonHandler implements ActionListener {
     int row = objOrderManager.getSelectedRow();
     return row;
   }
+
   private List<List<Object>> deleteOrders (int position){
-    List<List<Object>> orders;
     OrderVisitor visitor =  objOrderManager.getOrderVisitor();
-    orders = new ArrayList(visitor.deleteOrder(position));
-    //get input values from table
+    List<List<Object>>  orders = new ArrayList(visitor.deleteOrder(position));
     return orders;
   }
 

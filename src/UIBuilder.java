@@ -12,4 +12,8 @@ public abstract class UIBuilder {
     public JPanel getSearchUI() {
         return searchUI;
     }
+
+    public abstract void setOrderAmountText(String valor);
+    public abstract void setTaxtext(String valor);
+    public abstract void setSHtext(String valor);
 }

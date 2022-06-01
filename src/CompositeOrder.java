@@ -24,6 +24,11 @@ public class CompositeOrder implements Order {
         return orders;
     }
 
+    public List<List<Object>> updateOrders(int position, List<Object> order) {
+        orders.set(position,order);
+        return orders;
+    }
+
     public double getOrderAmount() {
         double orderAmount = 0;
 

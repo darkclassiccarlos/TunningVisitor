@@ -86,4 +86,16 @@ public class ChiniseOrder extends UIBuilder implements Order {
     return txtAdditionalTax.getText();
   }
 
+  public void setOrderAmountText(String valor) {
+    txtOrderAmount.setText(valor);
+  }
+
+  public void setTaxtext(String valor) {
+    txtAdditionalTax.setText(valor);
+  }
+
+  public void setSHtext(String valor) {
+    txtAdditionalTax.setText(valor);
+  }
+
 }

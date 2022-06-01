@@ -60,4 +60,16 @@ public class NonCaliforniaOrder extends UIBuilder implements Order {
     return "0";
   }
 
+  public void setOrderAmountText(String valor) {
+    txtOrderAmount.setText(valor);
+  }
+
+  public void setTaxtext(String valor) {
+
+  }
+
+  public void setSHtext(String valor) {
+
+  }
+
 }

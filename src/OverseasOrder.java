@@ -85,4 +85,15 @@ public class OverseasOrder extends UIBuilder implements Order {
     return txtAdditionalTax.getText();
   }
 
+  public void setOrderAmountText(String valor) {
+    txtOrderAmount.setText(valor);
+  }
+
+  public void setTaxtext(String valor) {
+  }
+
+  public void setSHtext(String valor) {
+    txtAdditionalTax.setText(valor);
+  }
+
 }

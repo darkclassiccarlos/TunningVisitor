@@ -44,8 +44,6 @@ public class OrderManager extends JFrame {
     //Create the visitor instance
     objVisitor = new OrderVisitor();
 
-
-
     cmbOrderType = new JComboBox();
     cmbOrderType.addItem(OrderManager.BLANK);
     cmbOrderType.addItem(OrderManager.CA_ORDER);
@@ -201,7 +199,13 @@ public class OrderManager extends JFrame {
 
         selectedData = typeData + ";" + amountData + ";" + addTaxData + ";" + addSHData + ";" + resData;
 
-        JOptionPane.showMessageDialog(null, selectedData);
+        int confirmDialog = JOptionPane.showConfirmDialog(null, "You want to update the data: " + selectedData);
+
+        if (confirmDialog == 0) {
+          objButtonHandler.viewEditOrder();
+        }
+
+
       }
     });
     //****************************************************
@@ -295,26 +299,13 @@ class ButtonHandler implements ActionListener {
       //String selection = objOrderManager.getOrderType();
       String orderType = objOrderManager.getOrderType();
 
-      if (orderType.equals("") == false) {
-        BuilderFactory factory = new BuilderFactory();
-        //create an appropriate builder instance
-        builder = factory.getUIBuilder(orderType);
-        //configure the director with the builder
-        UIDirector director = new UIDirector(builder);
-        //director invokes different builder
-        // methods
-        director.build();
-        //get the final build object
-        JPanel UIObj = builder.getSearchUI();
+      printTypeOrder(orderType);
 
-        objOrderManager.displayNewUI(UIObj);
-      }
     }
-    if (e.getActionCommand().equals(OrderManager.CREATE_ORDER)
-        ) {
+    if (e.getActionCommand().equals(OrderManager.CREATE_ORDER))
+    {
       //get input values
       String orderType = objOrderManager.getOrderType();
-      //String strOrderAmount = objOrderManager.getOrderAmountText();
       String strOrderAmount = builder.getOrderAmountText();
       String strTax = builder.getTaxtext();
       String strSH = builder.getSHtext();
@@ -333,8 +324,7 @@ class ButtonHandler implements ActionListener {
         strSH = "0.0";
       }
 
-      dblOrderAmount =
-        new Double(strOrderAmount).doubleValue();
+      dblOrderAmount = new Double(strOrderAmount).doubleValue();
       dblTax = new Double(strTax).doubleValue();
       dblSH = new Double(strSH).doubleValue();
 
@@ -365,12 +355,98 @@ class ButtonHandler implements ActionListener {
       int position = getSelectedRow();
       List<List<Object>> orders = deleteOrders(position);
       SetValuesGrid(orders);
+      GetTotalMethod();
     }
     //****
 
+    if (e.getActionCommand().equals(OrderManager.UPDATE_ORDER)) {
+
+      int position = getSelectedRow();
+
+      List<Object> orderObj = getOrder(position);
+
+      String orderType = orderObj.get(0).toString();
+
+      //get input values
+      String strOrderAmount = builder.getOrderAmountText();
+      String strTax = builder.getTaxtext();
+      String strSH = builder.getSHtext();
+
+      double dblOrderAmount = 0.0;
+      double dblTax = 0.0;
+      double dblSH = 0.0;
+
+      if (strOrderAmount.trim().length() == 0) {
+        strOrderAmount = "0.0";
+      }
+      if (strTax.trim().length() == 0) {
+        strTax = "0.0";
+      }
+      if (strSH.trim().length() == 0) {
+        strSH = "0.0";
+      }
+
+      dblOrderAmount = new Double(strOrderAmount).doubleValue();
+      dblTax = new Double(strTax).doubleValue();
+      dblSH = new Double(strSH).doubleValue();
+
+      //Create the order
+      Order order = createOrder(orderType, dblOrderAmount, dblTax, dblSH);
+
+      //Get the Visitor
+      OrderVisitor visitor = objOrderManager.getOrderVisitor();
+
+      // accept the visitor instance
+      order.accept(visitor);
+
+      objOrderManager.setTotalValue("Order Updated Successfully");
+
+      //Grid tables
+      SetValuesGrid(visitor.deleteOrder(position));
+      GetTotalMethod();
+
+    }
   }
+
+  public void viewEditOrder() {
+    int position = getSelectedRow();
+
+    List<Object> orderObj = getOrder(position);
+
+    String orderType = orderObj.get(0).toString();
+    String dblOrderAmount = orderObj.get(1).toString();
+    String dblTax = orderObj.get(2).toString();
+    String dblSH = orderObj.get(3).toString();
+
+    if (orderType != null) {
+
+      printTypeOrder(orderType);
+
+      builder.setOrderAmountText(dblOrderAmount);
+      builder.setTaxtext(dblTax);
+      builder.setSHtext(dblSH);
+
+    }
+  }
+
+  private void printTypeOrder(String orderType) {
+    if (orderType.equals("") == false) {
+      BuilderFactory factory = new BuilderFactory();
+      //create an appropriate builder instance
+      builder = factory.getUIBuilder(orderType);
+      //configure the director with the builder
+      UIDirector director = new UIDirector(builder);
+      //director invokes different builder
+      // methods
+      director.build();
+      //get the final build object
+      JPanel UIObj = builder.getSearchUI();
+
+      objOrderManager.displayNewUI(UIObj);
+    }
+  }
+
   private int getSelectedRow(){
-    OrderVisitor visitor =  objOrderManager.getOrderVisitor();
     int row = objOrderManager.getSelectedRow();
     return row;
   }
@@ -381,13 +457,16 @@ class ButtonHandler implements ActionListener {
     return orders;
   }
 
-  private void GetTotalMethod() {
-    String totalResult;
-    //Get the Visitor
+  private List<Object> getOrder (int position){
     OrderVisitor visitor =  objOrderManager.getOrderVisitor();
+    List<Object>  order = new ArrayList(visitor.getOrder(position));
+    return order;
+  }
 
-    totalResult = new Double(visitor.getOrderTotal()).toString();
+  private void GetTotalMethod() {
 
+    OrderVisitor visitor =  objOrderManager.getOrderVisitor();
+    String totalResult = new Double(visitor.getOrderTotal()).toString();
     totalResult = " Orders Total = " + totalResult;
 
     objOrderManager.setTotalValue(totalResult);
@@ -430,8 +509,7 @@ class ButtonHandler implements ActionListener {
       OrderManager.NON_CA_ORDER)) {
       return new NonCaliforniaOrder(orderAmount);
     }
-    if (orderType.equalsIgnoreCase(
-          OrderManager.OVERSEAS_ORDER)) {
+    if (orderType.equalsIgnoreCase(OrderManager.OVERSEAS_ORDER)) {
       return new OverseasOrder(orderAmount, SH);
     }
     if (orderType.equalsIgnoreCase(

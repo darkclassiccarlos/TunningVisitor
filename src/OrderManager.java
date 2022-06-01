@@ -276,17 +276,7 @@ public class OrderManager extends JFrame {
 
   public void setGrid(TableModel tableModel){
 
-    //int tabLarge = tableModel.getRowCount();
-    //if (tabLarge > 0){
-    //  table = new JTable(tableModel);
-    //}else{
-    //  table.setModel(tableModel);
-    //}
-
     table.setModel(tableModel);
-
-
-
 
   }
 
@@ -372,20 +362,9 @@ class ButtonHandler implements ActionListener {
     }
     //****
     if (e.getActionCommand().equals(OrderManager.DELETE_ORDER)) {
-      //Get the Visitor
-      //OrderVisitor visitor = objOrderManager.getOrderVisitor();
-      //get the orders
-      List<List<Object>> orders = getOrders();
       int position = getSelectedRow();
-
-      // El index
-      int index = position;
-
-      orders.remove(index);
-      // accept the visitor instance
-      //order.accept(visitor);
-
-      //int position = SetValuesGrid(visitor.getOrders()) ;
+      List<List<Object>> orders = deleteOrders(position);
+      SetValuesGrid(orders);
     }
     //****
 
@@ -395,10 +374,10 @@ class ButtonHandler implements ActionListener {
     int row = objOrderManager.getSelectedRow();
     return row;
   }
-  private List<List<Object>> getOrders(){
+  private List<List<Object>> deleteOrders (int position){
     List<List<Object>> orders;
     OrderVisitor visitor =  objOrderManager.getOrderVisitor();
-    orders = new ArrayList(visitor.getOrders());
+    orders = new ArrayList(visitor.deleteOrder(position));
     //get input values from table
     return orders;
   }
